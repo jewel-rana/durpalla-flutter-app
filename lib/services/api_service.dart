@@ -62,23 +62,32 @@ class ApiService {
     throw Exception('Failed to fetch cart.');
   }
 
+  // simple wrappers you can reuse
+  static Future<Map<String, dynamic>> post(String path, Map body,
+      {Map<String, String>? headers}) async {
+    final res = await http.post(Uri.parse('$baseUrl/$path'),
+        body: jsonEncode(body),
+        headers: {'Content-Type': 'application/json', ...?headers});
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      return jsonDecode(res.body) as Map<String, dynamic>;
+    }
+    throw Exception('POST $path failed: ${res.statusCode}');
+  }
+
+  static Future<void> delete(String path) async {
+    final res = await http.delete(Uri.parse('$baseUrl/$path'));
+    if (res.statusCode != 204 && res.statusCode != 200) {
+      throw Exception('DELETE $path failed: ${res.statusCode}');
+    }
+  }
+
+
   static Future<dynamic> get(String endpoint) async {
     final url = Uri.parse('$baseUrl/$endpoint');
     final response = await http.get(url, headers: _headers());
     print('GET $url');
     print('Response Status: ${response.statusCode}');
     print('Response Body: ${response.body}');
-    return _handleResponse(response);
-  }
-
-  static Future<dynamic> post(String endpoint, Map<String, dynamic> data) async {
-    final url = Uri.parse('$baseUrl/$endpoint');
-    final response = await http.post(
-      url,
-      headers: _headers(),
-      body: jsonEncode(data),
-    );
-
     return _handleResponse(response);
   }
 
@@ -89,13 +98,6 @@ class ApiService {
       headers: _headers(),
       body: jsonEncode(data),
     );
-
-    return _handleResponse(response);
-  }
-
-  static Future<dynamic> delete(String endpoint) async {
-    final url = Uri.parse('$baseUrl/$endpoint');
-    final response = await http.delete(url, headers: _headers());
 
     return _handleResponse(response);
   }

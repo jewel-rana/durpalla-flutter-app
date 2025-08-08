@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../helpers/expiry_count_down.dart';
 import '../services/api_service.dart';
 
 class TripDetailsScreen extends StatefulWidget {
@@ -16,6 +19,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   Map<String, dynamic>? tripDetails;
   bool loading = true;
   bool _isCartSheetOpen = false;
+  late final ApiService api; // add this
 
   // UI state
   String selectedTab = 'cabin';
@@ -26,12 +30,19 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       int.tryParse(item['fare']?.toString() ?? '0') ?? 0;
   int get _cartTotal => cartItems.fold(0, (sum, it) => sum + _priceOf(it));
 
+  final Map<String, Timer> _expiryTimers = {}; // key: lock_id
+
+  String _idempotencyKey() =>
+      DateTime.now().microsecondsSinceEpoch.toString(); // or a UUID
+
 
   @override
   void initState() {
     super.initState();
+    api = ApiService();
     _fetchTripDetails();
   }
+
 
   Future<void> _fetchTripDetails() async {
     setState(() => loading = true);
@@ -45,6 +56,43 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       });
     } else {
       setState(() => loading = false);
+    }
+  }
+
+  void _startExpiryTimer(Map<String, dynamic> item) {
+    // item must contain 'lock_id' and 'expires_at' (ISO string)
+    final lockId = item['lock_id']?.toString();
+    final expiresAtStr = item['expires_at']?.toString();
+    if (lockId == null || expiresAtStr == null) return;
+
+    final expiresAt = DateTime.parse(expiresAtStr).toUtc();
+    final ms = expiresAt.difference(DateTime.now().toUtc()).inMilliseconds;
+
+    // if already expired, drop immediately
+    if (ms <= 0) {
+      setState(() => cartItems.removeWhere((e) => e['lock_id'] == lockId));
+      return;
+    }
+
+    // cancel any old timer
+    _expiryTimers[lockId]?.cancel();
+    _expiryTimers[lockId] = Timer(Duration(milliseconds: ms), () {
+      // auto remove locally on expiry (server will also release)
+      setState(() => cartItems.removeWhere((e) => e['lock_id'] == lockId));
+      _expiryTimers.remove(lockId);
+      // Optionally: show a toast "Item expired"
+    });
+  }
+
+  Future<void> _releaseIfLocked(Map<String, dynamic> item) async {
+    final lockId = item['lock_id']?.toString();
+    if (lockId == null) return;
+    try {
+      await api.releaseLock(lockId);
+    } catch (_) {
+      // ignore; server may have already expired it
+    } finally {
+      _expiryTimers.remove(lockId)?.cancel();
     }
   }
 
@@ -67,13 +115,49 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   bool isInCart(Map<String, dynamic> item) =>
       cartItems.any((i) => i['item_id'] == item['item_id']);
 
-  void toggleCartItem(Map<String, dynamic> item) {
-    final exists = isInCart(item);
-    setState(() {
-      exists
-          ? cartItems.removeWhere((i) => i['item_id'] == item['item_id'])
-          : cartItems.add(item);
-    });
+  Future<void> toggleCartItem(Map<String, dynamic> item) async {
+    final existsIdx = cartItems.indexWhere((i) => i['item_id'] == item['item_id']);
+    if (existsIdx >= 0) {
+      // remove -> release backend lock
+      final existing = cartItems[existsIdx];
+      await _releaseIfLocked(existing);
+      setState(() => cartItems.removeAt(existsIdx));
+      return;
+    }
+
+    // add -> request lock from backend
+    final itemType = (selectedTab == 'cabin') ? 'cabin' : 'seat';
+    try {
+      final payload = await api.lockItem(
+        tripId: widget.tripId,
+        itemType: (selectedTab == 'cabin') ? 'cabin' : 'seat',
+        itemId: int.parse(item['item_id'].toString()),
+        idempotencyKey: _idempotencyKey(),
+      );
+
+      // merge UI fields you already use (vehicle_name, cabin_no, route_name, fare)
+      final merged = {
+        ...item,
+        ...payload,
+        // normalize meta fields if backend returned under meta
+        'vehicle_name': payload['meta']?['vehicle_name'] ?? item['vehicle_name'] ?? tripDetails?['vehicle_name'],
+        'cabin_no': payload['meta']?['cabin_no'] ?? item['cabin_no'],
+        'route_name': payload['meta']?['route_name'] ?? tripDetails?['route_name'],
+        'fare': payload['price'] ?? item['fare'],
+      };
+
+      setState(() => cartItems.add(merged));
+      _startExpiryTimer(merged);
+
+      // ensure bar visible (you already open on tap/swipe)
+    } catch (e) {
+      // show a small error—409/423 means unavailable
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Unavailable or already locked. Please pick another.')),
+        );
+      }
+    }
   }
 
   String _floorKey(int floor) {
@@ -276,11 +360,11 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                   (cabin['status']?.toString() == '0') || (cabin['cabin_class'] == 'cabin-disable');
 
               return Opacity(
-                opacity: isDisabled ? 0.5 : 1,
+                opacity: isDisabled ? 0.3 : 1,
                 child: IgnorePointer(
                   ignoring: isDisabled,
                   child: GestureDetector(
-                    onTap: () => toggleCartItem(cabin),
+                    onTap: () async => await toggleCartItem(cabin),
                     child: Container(
                       margin: const EdgeInsets.all(6),
                       padding: const EdgeInsets.all(10),
@@ -334,11 +418,14 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       builder: (_) {
         return StatefulBuilder(
           builder: (context, setModalState) {
-            void removeAt(int index) {
+            void removeAt(int index) async {
+              final item = cartItems[index];
+              await _releaseIfLocked(item);
               setState(() => cartItems.removeAt(index)); // update page
               setModalState(() {});                      // refresh sheet
               if (cartItems.isEmpty) Navigator.pop(context); // close only if empty
             }
+
 
             // ... your DraggableScrollableSheet + ListView
             //   Use removeAt(index) for delete actions
@@ -418,6 +505,14 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                                       Expanded(child: Text(route, maxLines: 1, overflow: TextOverflow.ellipsis)),
                                     ],
                                   ),
+                                  if (item['expires_at'] != null)
+                                    Row(
+                                      children: [
+                                        const Icon(Icons.timer_outlined, size: 16),
+                                        const SizedBox(width: 6),
+                                        ExpiryCountdown(expiresAtIso: item['expires_at'].toString()),
+                                      ],
+                                    ),
                                 ],
                               ),
                               trailing: IconButton(

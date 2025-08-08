@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
 import 'screens/booking_screen.dart';
 import 'screens/trips_screen.dart';
@@ -36,6 +37,9 @@ class _JolzanAppState extends State<JolzanApp> {
       title: 'Durpalla',
       themeMode: _themeMode,
       theme: ThemeData(
+        textTheme: GoogleFonts.robotoCondensedTextTheme(
+          Theme.of(context).textTheme,
+        ),
         brightness: Brightness.light,
         primaryColor: const Color(0xFF0061A8),
         scaffoldBackgroundColor: Colors.white,
@@ -80,8 +84,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(),
     const BookingScreen(transportType: 'launch',),
-    const TripsScreen(),
-    const CartScreen()
+    const TripsScreen()
   ];
 
   void _onItemTapped(int index) {
@@ -168,8 +171,7 @@ class _MainScaffoldState extends State<MainScaffold> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.airplane_ticket), label: 'Trips'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart')
+          BottomNavigationBarItem(icon: Icon(Icons.airplane_ticket), label: 'Trips')
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: const Color(0xFF0061A8),

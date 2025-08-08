@@ -9,6 +9,7 @@
       "dependencies": [
         "cupertino_icons",
         "flutter",
+        "google_fonts",
         "http",
         "path_provider",
         "printing",
@@ -593,6 +594,16 @@
         "ffi",
         "meta",
         "path"
+      ]
+    },
+    {
+      "name": "google_fonts",
+      "version": "6.3.0",
+      "dependencies": [
+        "crypto",
+        "flutter",
+        "http",
+        "path_provider"
       ]
     }
   ],

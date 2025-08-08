@@ -22,10 +22,10 @@ class _BookingScreenState extends State<BookingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('${widget.transportType} booking')),
+      resizeToAvoidBottomInset: true,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(16),
+        child: ListView(
           children: [
             const Text(
               'Book Your Ticket',
@@ -102,7 +102,20 @@ class _BookingScreenState extends State<BookingScreen> {
                     );
                   }
                 },
-                child: const Text('Search Trips'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade600, // ✅ background color
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 16,
+                  ), // ✅ inner padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8), // optional rounded corners
+                  ),
+                ),
+                child: const Text(
+                  'Search Trips',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
               ),
             ),
           ],
