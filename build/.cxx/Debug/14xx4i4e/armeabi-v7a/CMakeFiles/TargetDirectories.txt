@@ -1,0 +1,2 @@
+/home/jewelnewroz/StudioProjects/Durpalla/build/.cxx/Debug/14xx4i4e/armeabi-v7a/CMakeFiles/edit_cache.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/.cxx/Debug/14xx4i4e/armeabi-v7a/CMakeFiles/rebuild_cache.dir

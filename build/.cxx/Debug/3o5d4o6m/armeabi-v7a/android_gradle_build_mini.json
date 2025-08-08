@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/jewelnewroz/snap/flutter/common/flutter/packages/flutter_tools/gradle/src/main/scripts/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/jewelnewroz/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/home/jewelnewroz/StudioProjects/Durpalla/build/.cxx/Debug/3o5d4o6m/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/jewelnewroz/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/home/jewelnewroz/StudioProjects/Durpalla/build/.cxx/Debug/3o5d4o6m/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

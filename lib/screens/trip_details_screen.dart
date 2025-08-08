@@ -1,0 +1,591 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
+import '../services/api_service.dart';
+
+class TripDetailsScreen extends StatefulWidget {
+  final int tripId;
+
+  const TripDetailsScreen({super.key, required this.tripId});
+
+  @override
+  State<TripDetailsScreen> createState() => _TripDetailsScreenState();
+}
+
+class _TripDetailsScreenState extends State<TripDetailsScreen> {
+  Map<String, dynamic>? tripDetails;
+  bool loading = true;
+  bool _isCartSheetOpen = false;
+
+  // UI state
+  String selectedTab = 'cabin';
+  int selectedFloor = 1;
+  final List<Map<String, dynamic>> cartItems = [];
+
+  int _priceOf(Map<String, dynamic> item) =>
+      int.tryParse(item['fare']?.toString() ?? '0') ?? 0;
+  int get _cartTotal => cartItems.fold(0, (sum, it) => sum + _priceOf(it));
+
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchTripDetails();
+  }
+
+  Future<void> _fetchTripDetails() async {
+    setState(() => loading = true);
+    final response = await ApiService.get('trip/${widget.tripId}');
+    if (response['success'] == true) {
+      final data = Map<String, dynamic>.from(response['data']);
+      setState(() {
+        tripDetails = data;
+        selectedFloor = (data['default_floor'] as int?) ?? 1;
+        loading = false;
+      });
+    } else {
+      setState(() => loading = false);
+    }
+  }
+
+  // ---- Utils ----------------------------------------------------------------
+
+  String get vehicleImageUrl {
+    final raw = tripDetails?['vehicle_photo'] as String? ?? 'default/launch.png';
+
+    if (raw.startsWith('http')) {
+      if (kDebugMode) print('Vehicle image URL (from API): $raw');
+      return raw;
+    }
+    const fileBaseUrl = 'https://apigw.durpalla.com';
+    final normalized = raw.startsWith('/') ? raw : '/$raw';
+    final finalUrl = '$fileBaseUrl$normalized';
+    if (kDebugMode) print('Vehicle image URL (constructed): $finalUrl');
+    return finalUrl;
+  }
+
+  bool isInCart(Map<String, dynamic> item) =>
+      cartItems.any((i) => i['item_id'] == item['item_id']);
+
+  void toggleCartItem(Map<String, dynamic> item) {
+    final exists = isInCart(item);
+    setState(() {
+      exists
+          ? cartItems.removeWhere((i) => i['item_id'] == item['item_id'])
+          : cartItems.add(item);
+    });
+  }
+
+  String _floorKey(int floor) {
+    switch (floor) {
+      case 1:
+        return 'first_floor';
+      case 2:
+        return 'second_floor';
+      case 3:
+        return 'third_floor';
+      case 4:
+        return 'fourth_floor';
+      default:
+        return 'first_floor';
+    }
+  }
+
+  // ---- UI Pieces ------------------------------------------------------------
+
+  Widget _buildHeader() {
+    return Stack(
+      children: [
+        Container(
+          height: 120,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(vehicleImageUrl),
+              fit: BoxFit.cover,
+              onError: (_, __) => {},
+            ),
+          ),
+          child: Image.network(
+            vehicleImageUrl,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) =>
+                Image.asset('assets/default/launch.png', fit: BoxFit.cover),
+          ),
+        ),
+        Positioned.fill(
+          child: Container(
+            color: Colors.blueAccent.withOpacity(0.5),
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  'Route: ${tripDetails!['route_name']}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text('Vehicle: ${tripDetails!['vehicle_name']}',
+                    style: const TextStyle(color: Colors.white)),
+                Text('Departure: ${tripDetails!['schedule_date']}',
+                    style: const TextStyle(color: Colors.white)),
+                Text('Service Type: ${tripDetails!['service_type']}',
+                    style: const TextStyle(color: Colors.white)),
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildFloorDropdown() {
+    final floors = (tripDetails?['floors'] as List?) ?? [];
+    if (floors.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: DropdownButtonFormField<int>(
+        value: selectedFloor,
+        decoration: const InputDecoration(
+          labelText: 'Select Floor',
+          border: OutlineInputBorder(),
+        ),
+        items: floors.map<DropdownMenuItem<int>>((f) {
+          final m = Map<String, dynamic>.from(f);
+          return DropdownMenuItem<int>(
+            value: m['value'] as int,
+            child: Text(m['label'].toString()),
+          );
+        }).toList(),
+        onChanged: (value) {
+          if (value != null) {
+            setState(() => selectedFloor = value);
+            // If you actually need to refetch per-floor from backend, call _fetchTripDetails() here.
+            // For now, we use the already-loaded data per your payload.
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildTabs() {
+    final hasSeats = tripDetails?['seats'] != null;
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(bottom: BorderSide(color: Colors.blue, width: 2)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: GestureDetector(
+              onTap: () => setState(() => selectedTab = 'cabin'),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color:
+                      selectedTab == 'cabin' ? Colors.blue : Colors.transparent,
+                      width: 3,
+                    ),
+                  ),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  'Cabin',
+                  style: TextStyle(
+                    color:
+                    selectedTab == 'cabin' ? Colors.blue : Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          if (hasSeats)
+            Expanded(
+              child: GestureDetector(
+                onTap: () => setState(() => selectedTab = 'seat'),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                        color: selectedTab == 'seat'
+                            ? Colors.blue
+                            : Colors.transparent,
+                        width: 3,
+                      ),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Seat',
+                    style: TextStyle(
+                      color:
+                      selectedTab == 'seat' ? Colors.blue : Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCabinGrid() {
+    final cabinsMap = tripDetails?['cabins'] as Map<String, dynamic>?;
+    if (cabinsMap == null) return const Text('No cabins');
+
+    final key = _floorKey(selectedFloor);
+    final floorData = cabinsMap[key];
+
+    // Must be like {"1":[...], "2":[...]} for rows
+    if (floorData is! Map || floorData.isEmpty) {
+      return const Text('No cabins');
+    }
+
+    final List<int> sortedRows = floorData.keys
+        .map((k) => int.tryParse(k.toString()) ?? 0)
+        .toList()
+      ..sort();
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: sortedRows.map((rowNum) {
+        final rowItems = List<Map<String, dynamic>>.from(
+          (floorData['$rowNum'] as List).map((e) => Map<String, dynamic>.from(e)),
+        );
+
+        return Expanded(
+          child: Column(
+            children: rowItems.map<Widget>((cabin) {
+              if (cabin['cabin_type'] == 'empty') {
+                return const SizedBox(height: 60);
+              }
+
+              final isSelected = isInCart(cabin);
+              final isDisabled =
+                  (cabin['status']?.toString() == '0') || (cabin['cabin_class'] == 'cabin-disable');
+
+              return Opacity(
+                opacity: isDisabled ? 0.5 : 1,
+                child: IgnorePointer(
+                  ignoring: isDisabled,
+                  child: GestureDetector(
+                    onTap: () => toggleCartItem(cabin),
+                    child: Container(
+                      margin: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: isSelected ? Colors.green[100] : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: isSelected ? Colors.green : Colors.grey,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          if (cabin['cabin_is_ac'] == 1)
+                            const Align(
+                              alignment: Alignment.topRight,
+                              child: Text(
+                                'AC',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            ),
+                          Text(
+                            cabin['cabin_no']?.toString() ?? '',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text('৳${cabin['fare']}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Future<void> _openCartSheet() {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (_) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            void removeAt(int index) {
+              setState(() => cartItems.removeAt(index)); // update page
+              setModalState(() {});                      // refresh sheet
+              if (cartItems.isEmpty) Navigator.pop(context); // close only if empty
+            }
+
+            // ... your DraggableScrollableSheet + ListView
+            //   Use removeAt(index) for delete actions
+            //   Keep sticky footer with total & checkout
+            return DraggableScrollableSheet(
+              expand: false,
+              initialChildSize: 0.7,
+              minChildSize: 0.4,
+              maxChildSize: 0.95,
+              builder: (_, controller) {
+                return Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    Container(
+                      width: 40,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Colors.black26,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Your Cart',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: ListView.separated(
+                        controller: controller,
+                        itemCount: cartItems.length,
+                        separatorBuilder: (_, __) => const Divider(height: 0),
+                        itemBuilder: (context, index) {
+                          final item = cartItems[index];
+                          final vehicle = item['vehicle_name'] ?? tripDetails?['vehicle_name'] ?? '';
+                          final cabinNo = item['cabin_no'] ?? 'Cabin';
+                          final route = item['route_name'] ?? tripDetails?['route_name'] ?? '';
+                          final price = _priceOf(item);
+
+                          return Dismissible(
+                            key: ValueKey('cart_${item['item_id']}_${item['cabin_no']}'),
+                            direction: DismissDirection.endToStart,
+                            onDismissed: (_) => removeAt(index),
+                            background: Container(
+                              color: Colors.red.shade100,
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              child: const Icon(Icons.delete, color: Colors.red),
+                            ),
+                            child: ListTile(
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(cabinNo, style: const TextStyle(fontWeight: FontWeight.w600)),
+                                  Text('৳$price',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w700, color: Colors.green)),
+                                ],
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.directions_boat_outlined, size: 16),
+                                      const SizedBox(width: 6),
+                                      Expanded(child: Text(vehicle, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Row(
+                                    children: [
+                                      const Icon(Icons.alt_route, size: 16),
+                                      const SizedBox(width: 6),
+                                      Expanded(child: Text(route, maxLines: 1, overflow: TextOverflow.ellipsis)),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete, color: Colors.red),
+                                onPressed: () => removeAt(index), // <-- no pop here
+                                tooltip: 'Remove',
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    // Sticky footer with total + checkout
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.05),
+                            blurRadius: 8,
+                            offset: const Offset(0, -2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Subtotal',
+                                    style: TextStyle(color: Colors.black54)),
+                                Text(
+                                  '৳$_cartTotal',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.green,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              // TODO: Navigate to checkout screen
+                            },
+                            icon: const Icon(Icons.lock_outline),
+                            label: const Text('Checkout'),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      },
+    );
+  }
+
+
+  // ---- Build ----------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Trip Details')),
+      body: loading
+          ? const Center(child: CircularProgressIndicator())
+          : (tripDetails == null)
+          ? const Center(child: Text('Trip details not found'))
+          : SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            const SizedBox(height: 16),
+            _buildFloorDropdown(),
+            const SizedBox(height: 16),
+            _buildTabs(),
+            const SizedBox(height: 16),
+            if (selectedTab == 'cabin')
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: _buildCabinGrid(),
+              ),
+            if (selectedTab == 'seat')
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text('Seat layout coming soon...'),
+              ),
+          ],
+        ),
+      ),
+
+      // ✅ No empty space when cart is empty. Shows fixed-height bar when items exist.
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Material(
+          elevation: 10,
+          color: Colors.white,
+          child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () async {
+              if (_isCartSheetOpen) return;
+              _isCartSheetOpen = true;
+              await _openCartSheet();
+              _isCartSheetOpen = false;
+            },
+            onVerticalDragUpdate: (details) async {
+              // swipe up to open (negative delta)
+              if (details.primaryDelta != null && details.primaryDelta! < -6) {
+                if (_isCartSheetOpen) return;
+                _isCartSheetOpen = true;
+                await _openCartSheet();
+                _isCartSheetOpen = false;
+              }
+            },
+            child: Container(
+              height: 72,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  const Icon(Icons.shopping_cart_outlined),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          cartItems.isEmpty
+                              ? 'Your cart is empty'
+                              : '${cartItems.length} item${cartItems.length > 1 ? 's' : ''}',
+                          style: const TextStyle(fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 2),
+                        Text('Subtotal: ৳$_cartTotal',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Colors.green,
+                            )),
+                      ],
+                    ),
+                  ),
+                  const Row(
+                    children: [
+                      Text('Swipe up or tap'),
+                      SizedBox(width: 6),
+                      Icon(Icons.expand_less),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+
+    );
+  }
+}

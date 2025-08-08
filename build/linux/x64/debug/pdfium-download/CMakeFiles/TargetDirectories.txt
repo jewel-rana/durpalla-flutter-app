@@ -1,0 +1,3 @@
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/pdfium-download/CMakeFiles/rebuild_cache.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/pdfium-download/CMakeFiles/edit_cache.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/pdfium-download/CMakeFiles/pdfium-download.dir

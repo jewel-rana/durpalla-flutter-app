@@ -1,0 +1,1 @@
+ /home/jewelnewroz/StudioProjects/Durpalla/.dart_tool/flutter_build/f5d964a9ba73d18150853d4536b8d9a4/native_assets.json: 
