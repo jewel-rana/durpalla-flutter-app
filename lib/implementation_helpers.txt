@@ -1,0 +1,34 @@
+Use Snack Bar to Api via Api Guard
+============================================
+final api = ApiService();
+final ok = await guardApi<Map<String, dynamic>>(
+  context,
+  api.lockItem(
+    tripId: tripId,
+    itemType: 'cabin',
+    itemId: itemId,
+    idempotencyKey: key,
+  ),
+  successMessage: 'Added to cart',
+);
+
+import 'utils/api_guard.dart';
+import 'helpers/snack_bar_helper.dart';
+
+// Success case example
+final res = await guardApi<Map<String, dynamic>>(
+  context,
+  ApiService.post('trip/search', {
+    'date': formatDate(departDate),
+    'return_date': returnDate != null ? formatDate(returnDate!) : null,
+    'from': fromId,
+    'to': toId,
+  }),
+  successMessage: 'Trips loaded',
+);
+
+// 3-second success snackbar
+showSnack(context, "Booking confirmed!", kind: SnackKind.success);
+
+// 6-second error snackbar
+showSnack(context, "Server is down, please try again later.", kind: SnackKind.error, duration: Duration(seconds: 6));
