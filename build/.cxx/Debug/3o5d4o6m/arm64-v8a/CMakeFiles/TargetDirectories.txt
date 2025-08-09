@@ -1,2 +1,0 @@
-/home/jewelnewroz/StudioProjects/Durpalla/build/.cxx/Debug/3o5d4o6m/arm64-v8a/CMakeFiles/edit_cache.dir
-/home/jewelnewroz/StudioProjects/Durpalla/build/.cxx/Debug/3o5d4o6m/arm64-v8a/CMakeFiles/rebuild_cache.dir
