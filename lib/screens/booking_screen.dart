@@ -20,6 +20,18 @@ class _BookingScreenState extends State<BookingScreen> {
   DateTime? departDate = DateTime.now();
   DateTime? returnDate;
 
+  @override
+  void initState() {
+    super.initState();
+
+    // ✅ Default From / To values
+    fromController.text = "Dhaka";
+    toController.text   = "Barisal";
+
+    // ✅ Default Depart date: tomorrow
+    departDate = DateTime.now().add(const Duration(days: 1));
+  }
+
   // final fromController = TextEditingController();
   // final toController = TextEditingController();
 
