@@ -196,6 +196,12 @@ PDFium_LIBRARY:FILEPATH=/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x6
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/snap/flutter/current/usr/bin/pkg-config
 
+//Value Computed by CMake
+flutter_secure_storage_linux_BINARY_DIR:STATIC=/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux
+
+//Value Computed by CMake
+flutter_secure_storage_linux_SOURCE_DIR:STATIC=/home/jewelnewroz/StudioProjects/Durpalla/linux/flutter/ephemeral/.plugin_symlinks/flutter_secure_storage_linux/linux
+
 //Path to a library.
 pkgcfg_lib_GIO_gio-2.0:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu/libgio-2.0.so
 
@@ -279,6 +285,18 @@ pkgcfg_lib_GTK_pango-1.0:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu
 
 //Path to a library.
 pkgcfg_lib_GTK_pangocairo-1.0:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu/libpangocairo-1.0.so
+
+//Path to a library.
+pkgcfg_lib_LIBSECRET_gio-2.0:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu/libgio-2.0.so
+
+//Path to a library.
+pkgcfg_lib_LIBSECRET_glib-2.0:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu/libglib-2.0.so
+
+//Path to a library.
+pkgcfg_lib_LIBSECRET_gobject-2.0:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu/libgobject-2.0.so
+
+//Path to a library.
+pkgcfg_lib_LIBSECRET_secret-1:FILEPATH=/snap/flutter/current/usr/lib/x86_64-linux-gnu/libsecret-1.so
 
 //Value Computed by CMake
 printing_BINARY_DIR:STATIC=/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/printing
@@ -388,7 +406,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -575,16 +593,53 @@ GTK_gtk+-3.0_INCLUDEDIR:INTERNAL=
 GTK_gtk+-3.0_LIBDIR:INTERNAL=
 GTK_gtk+-3.0_PREFIX:INTERNAL=
 GTK_gtk+-3.0_VERSION:INTERNAL=
+LIBSECRET_CFLAGS:INTERNAL=-pthread;-I/snap/flutter/current/usr/include/libsecret-1;-I/snap/flutter/current/usr/include/libmount;-I/snap/flutter/current/usr/include/blkid;-I/snap/flutter/current/usr/include/glib-2.0;-I/snap/flutter/current/usr/lib/x86_64-linux-gnu/glib-2.0/include
+LIBSECRET_CFLAGS_I:INTERNAL=
+LIBSECRET_CFLAGS_OTHER:INTERNAL=-pthread
+LIBSECRET_FOUND:INTERNAL=1
+LIBSECRET_INCLUDEDIR:INTERNAL=/snap/flutter/current/usr/include
+LIBSECRET_INCLUDE_DIRS:INTERNAL=/snap/flutter/current/usr/include/libsecret-1;/snap/flutter/current/usr/include/libmount;/snap/flutter/current/usr/include/blkid;/snap/flutter/current/usr/include/glib-2.0;/snap/flutter/current/usr/lib/x86_64-linux-gnu/glib-2.0/include
+LIBSECRET_LDFLAGS:INTERNAL=-L/snap/flutter/current/usr/lib/x86_64-linux-gnu;-lsecret-1;-lgio-2.0;-lgobject-2.0;-lglib-2.0
+LIBSECRET_LDFLAGS_OTHER:INTERNAL=
+LIBSECRET_LIBDIR:INTERNAL=/snap/flutter/current/usr/lib/x86_64-linux-gnu
+LIBSECRET_LIBRARIES:INTERNAL=secret-1;gio-2.0;gobject-2.0;glib-2.0
+LIBSECRET_LIBRARY_DIRS:INTERNAL=/snap/flutter/current/usr/lib/x86_64-linux-gnu
+LIBSECRET_LIBS:INTERNAL=
+LIBSECRET_LIBS_L:INTERNAL=
+LIBSECRET_LIBS_OTHER:INTERNAL=
+LIBSECRET_LIBS_PATHS:INTERNAL=
+LIBSECRET_MODULE_NAME:INTERNAL=libsecret-1
+LIBSECRET_PREFIX:INTERNAL=/snap/flutter/current/usr
+LIBSECRET_STATIC_CFLAGS:INTERNAL=-pthread;-I/snap/flutter/current/usr/include/libsecret-1;-I/snap/flutter/current/usr/include/libmount;-I/snap/flutter/current/usr/include/blkid;-I/snap/flutter/current/usr/include/glib-2.0;-I/snap/flutter/current/usr/lib/x86_64-linux-gnu/glib-2.0/include
+LIBSECRET_STATIC_CFLAGS_I:INTERNAL=
+LIBSECRET_STATIC_CFLAGS_OTHER:INTERNAL=-pthread
+LIBSECRET_STATIC_INCLUDE_DIRS:INTERNAL=/snap/flutter/current/usr/include/libsecret-1;/snap/flutter/current/usr/include/libmount;/snap/flutter/current/usr/include/blkid;/snap/flutter/current/usr/include/glib-2.0;/snap/flutter/current/usr/lib/x86_64-linux-gnu/glib-2.0/include
+LIBSECRET_STATIC_LDFLAGS:INTERNAL=-L/snap/flutter/current/usr/lib/x86_64-linux-gnu;-L/snap/flutter/current/usr/lib;-L/snap/flutter/current/usr/lib/x86_64-linux-gnu;-lsecret-1;-lgcrypt;-lgio-2.0;-ldl;-pthread;-lresolv;-lgmodule-2.0;-pthread;-ldl;-lz;-lmount;-lblkid;-lselinux;-lsepol;-lpcre2-8;-pthread;-lgobject-2.0;-pthread;-lffi;-lglib-2.0;-pthread;-lpcre;-pthread
+LIBSECRET_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
+LIBSECRET_STATIC_LIBDIR:INTERNAL=
+LIBSECRET_STATIC_LIBRARIES:INTERNAL=secret-1;gcrypt;gio-2.0;dl;resolv;gmodule-2.0;dl;z;mount;blkid;selinux;sepol;pcre2-8;gobject-2.0;ffi;glib-2.0;pcre
+LIBSECRET_STATIC_LIBRARY_DIRS:INTERNAL=/snap/flutter/current/usr/lib/x86_64-linux-gnu;/snap/flutter/current/usr/lib;/snap/flutter/current/usr/lib/x86_64-linux-gnu
+LIBSECRET_STATIC_LIBS:INTERNAL=
+LIBSECRET_STATIC_LIBS_L:INTERNAL=
+LIBSECRET_STATIC_LIBS_OTHER:INTERNAL=
+LIBSECRET_STATIC_LIBS_PATHS:INTERNAL=
+LIBSECRET_VERSION:INTERNAL=0.20.4
+LIBSECRET_libsecret-1_INCLUDEDIR:INTERNAL=
+LIBSECRET_libsecret-1_LIBDIR:INTERNAL=
+LIBSECRET_libsecret-1_PREFIX:INTERNAL=
+LIBSECRET_libsecret-1_VERSION:INTERNAL=
 //ADVANCED property for variable: PKG_CONFIG_EXECUTABLE
 PKG_CONFIG_EXECUTABLE-ADVANCED:INTERNAL=1
 __pkg_config_arguments_GIO:INTERNAL=REQUIRED;IMPORTED_TARGET;gio-2.0
 __pkg_config_arguments_GLIB:INTERNAL=REQUIRED;IMPORTED_TARGET;glib-2.0
 __pkg_config_arguments_GTK:INTERNAL=REQUIRED;IMPORTED_TARGET;gtk+-3.0
 __pkg_config_arguments_GTKUnixPrint:INTERNAL=REQUIRED;IMPORTED_TARGET;gtk+-unix-print-3.0
+__pkg_config_arguments_LIBSECRET:INTERNAL=REQUIRED;IMPORTED_TARGET;libsecret-1>=0.18.4
 __pkg_config_checked_GIO:INTERNAL=1
 __pkg_config_checked_GLIB:INTERNAL=1
 __pkg_config_checked_GTK:INTERNAL=1
 __pkg_config_checked_GTKUnixPrint:INTERNAL=1
+__pkg_config_checked_LIBSECRET:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_GIO_gio-2.0
 pkgcfg_lib_GIO_gio-2.0-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_GIO_glib-2.0
@@ -641,5 +696,13 @@ pkgcfg_lib_GTK_harfbuzz-ADVANCED:INTERNAL=1
 pkgcfg_lib_GTK_pango-1.0-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: pkgcfg_lib_GTK_pangocairo-1.0
 pkgcfg_lib_GTK_pangocairo-1.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBSECRET_gio-2.0
+pkgcfg_lib_LIBSECRET_gio-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBSECRET_glib-2.0
+pkgcfg_lib_LIBSECRET_glib-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBSECRET_gobject-2.0
+pkgcfg_lib_LIBSECRET_gobject-2.0-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: pkgcfg_lib_LIBSECRET_secret-1
+pkgcfg_lib_LIBSECRET_secret-1-ADVANCED:INTERNAL=1
 prefix_result:INTERNAL=/snap/flutter/current/usr/lib/x86_64-linux-gnu
 

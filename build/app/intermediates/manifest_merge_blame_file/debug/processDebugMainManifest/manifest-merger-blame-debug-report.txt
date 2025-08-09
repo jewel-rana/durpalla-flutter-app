@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.durpalla"
+3    package="com.durpalla.booking"
 4    android:versionCode="1"
 5    android:versionName="1.0.0" >
 6
@@ -38,12 +38,12 @@
 30
 31    <permission
 31-->[androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
-32        android:name="com.example.durpalla.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+32        android:name="com.durpalla.booking.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
 32-->[androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
 33        android:protectionLevel="signature" />
 33-->[androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
 34
-35    <uses-permission android:name="com.example.durpalla.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+35    <uses-permission android:name="com.durpalla.booking.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 35-->[androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
 35-->[androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
 36
@@ -56,7 +56,7 @@
 42        android:icon="@mipmap/ic_launcher"
 43        android:label="durpalla" >
 44        <activity
-45            android:name="com.example.durpalla.MainActivity"
+45            android:name="com.durpalla.booking.MainActivity"
 46            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
 47            android:exported="true"
 48            android:hardwareAccelerated="true"
@@ -96,7 +96,7 @@
 81-->[:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:13:9-21:20
 82            android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
 82-->[:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:14:13-77
-83            android:authorities="com.example.durpalla.flutter.share_provider"
+83            android:authorities="com.durpalla.booking.flutter.share_provider"
 83-->[:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:15:13-74
 84            android:exported="false"
 84-->[:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:16:13-37
@@ -131,7 +131,7 @@
 102-->[:printing] /home/jewelnewroz/StudioProjects/Durpalla/build/printing/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-16:20
 103            android:name="net.nfet.flutter.printing.PrintFileProvider"
 103-->[:printing] /home/jewelnewroz/StudioProjects/Durpalla/build/printing/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:9:13-71
-104            android:authorities="com.example.durpalla.flutter.printing"
+104            android:authorities="com.durpalla.booking.flutter.printing"
 104-->[:printing] /home/jewelnewroz/StudioProjects/Durpalla/build/printing/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:10:13-68
 105            android:exported="false"
 105-->[:printing] /home/jewelnewroz/StudioProjects/Durpalla/build/printing/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:11:13-37
@@ -162,7 +162,7 @@
 119-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:24:9-32:20
 120            android:name="androidx.startup.InitializationProvider"
 120-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:25:13-67
-121            android:authorities="com.example.durpalla.androidx-startup"
+121            android:authorities="com.durpalla.booking.androidx-startup"
 121-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:26:13-68
 122            android:exported="false" >
 122-->[androidx.lifecycle:lifecycle-process:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/0c7cd1674da718ccee593f79cf8da244/transformed/jetified-lifecycle-process-2.7.0/AndroidManifest.xml:27:13-37

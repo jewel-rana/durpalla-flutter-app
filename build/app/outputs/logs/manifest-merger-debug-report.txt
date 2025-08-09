@@ -31,6 +31,7 @@ INJECTED from /home/jewelnewroz/StudioProjects/Durpalla/android/app/src/debug/An
 INJECTED from /home/jewelnewroz/StudioProjects/Durpalla/android/app/src/debug/AndroidManifest.xml:1:1-7:12
 INJECTED from /home/jewelnewroz/StudioProjects/Durpalla/android/app/src/debug/AndroidManifest.xml:1:1-7:12
 MERGED from [:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-35:12
+MERGED from [:flutter_secure_storage] /home/jewelnewroz/StudioProjects/Durpalla/build/flutter_secure_storage/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-10:12
 MERGED from [:path_provider_android] /home/jewelnewroz/StudioProjects/Durpalla/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-7:12
 MERGED from [:printing] /home/jewelnewroz/StudioProjects/Durpalla/build/printing/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:2:1-19:12
 MERGED from [androidx.fragment:fragment:1.7.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/1c8746a36ac065afed39d95b2852a559/transformed/fragment-1.7.1/AndroidManifest.xml:2:1-7:12
@@ -50,11 +51,12 @@ MERGED from [androidx.savedstate:savedstate:1.2.1] /home/jewelnewroz/.gradle/cac
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/aa55b2079cbc673a6a445c1850daa153/transformed/lifecycle-runtime-2.7.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/23f1459f3a17c3f297faa9e854d895db/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core-ktx:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/e7b4e62af0008ea11d5619489212cc48/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.security:security-crypto:1.1.0-alpha06] /home/jewelnewroz/.gradle/caches/8.12/transforms/b87823aa9ee377cf4f75094088b20314/transformed/jetified-security-crypto-1.1.0-alpha06/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:17:1-55:12
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/85879f220671a879b538e8ef16ed1744/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:17:1-33:12
 MERGED from [androidx.tracing:tracing:1.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/27003765dae66b7dc3bf878451ba1684/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:17:1-22:12
-MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/1d33f966f1aab687e952d4b7cce6845e/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/f3b8632830106ae874bd20aa567485d8/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/1d33f966f1aab687e952d4b7cce6845e/transformed/core-runtime-2.2.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/dc56adcbf17b642cc8bc810bfcbda96d/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window.extensions.core:core:1.0.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/449958d8d573c37840f9e10ca78b3740/transformed/jetified-core-1.0.0/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/25a37e5cf0f4e5220cbf7cafe9249990/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:2:1-7:12
@@ -89,6 +91,8 @@ INJECTED from /home/jewelnewroz/StudioProjects/Durpalla/android/app/src/debug/An
 INJECTED from /home/jewelnewroz/StudioProjects/Durpalla/android/app/src/debug/AndroidManifest.xml
 MERGED from [:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:share_plus] /home/jewelnewroz/StudioProjects/Durpalla/build/share_plus/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_secure_storage] /home/jewelnewroz/StudioProjects/Durpalla/build/flutter_secure_storage/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:6:5-8:53
+MERGED from [:flutter_secure_storage] /home/jewelnewroz/StudioProjects/Durpalla/build/flutter_secure_storage/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:6:5-8:53
 MERGED from [:path_provider_android] /home/jewelnewroz/StudioProjects/Durpalla/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:path_provider_android] /home/jewelnewroz/StudioProjects/Durpalla/build/path_provider_android/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
 MERGED from [:printing] /home/jewelnewroz/StudioProjects/Durpalla/build/printing/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:5:5-44
@@ -127,16 +131,18 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /home/jewe
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/23f1459f3a17c3f297faa9e854d895db/transformed/jetified-lifecycle-viewmodel-savedstate-2.7.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core-ktx:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/e7b4e62af0008ea11d5619489212cc48/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:5:5-44
 MERGED from [androidx.core:core-ktx:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/e7b4e62af0008ea11d5619489212cc48/transformed/jetified-core-ktx-1.13.1/AndroidManifest.xml:5:5-44
+MERGED from [androidx.security:security-crypto:1.1.0-alpha06] /home/jewelnewroz/.gradle/caches/8.12/transforms/b87823aa9ee377cf4f75094088b20314/transformed/jetified-security-crypto-1.1.0-alpha06/AndroidManifest.xml:20:5-44
+MERGED from [androidx.security:security-crypto:1.1.0-alpha06] /home/jewelnewroz/.gradle/caches/8.12/transforms/b87823aa9ee377cf4f75094088b20314/transformed/jetified-security-crypto-1.1.0-alpha06/AndroidManifest.xml:20:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.profileinstaller:profileinstaller:1.3.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/a41c77be64ae79775eea5abf0296f1bb/transformed/jetified-profileinstaller-1.3.1/AndroidManifest.xml:21:5-44
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/85879f220671a879b538e8ef16ed1744/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.startup:startup-runtime:1.1.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/85879f220671a879b538e8ef16ed1744/transformed/jetified-startup-runtime-1.1.1/AndroidManifest.xml:21:5-23:41
 MERGED from [androidx.tracing:tracing:1.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/27003765dae66b7dc3bf878451ba1684/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.tracing:tracing:1.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/27003765dae66b7dc3bf878451ba1684/transformed/jetified-tracing-1.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/1d33f966f1aab687e952d4b7cce6845e/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/1d33f966f1aab687e952d4b7cce6845e/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/f3b8632830106ae874bd20aa567485d8/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/f3b8632830106ae874bd20aa567485d8/transformed/versionedparcelable-1.1.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/1d33f966f1aab687e952d4b7cce6845e/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.2.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/1d33f966f1aab687e952d4b7cce6845e/transformed/core-runtime-2.2.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/dc56adcbf17b642cc8bc810bfcbda96d/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.interpolator:interpolator:1.0.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/dc56adcbf17b642cc8bc810bfcbda96d/transformed/interpolator-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.window.extensions.core:core:1.0.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/449958d8d573c37840f9e10ca78b3740/transformed/jetified-core-1.0.0/AndroidManifest.xml:5:5-44
@@ -145,6 +151,8 @@ MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/jewelnewro
 MERGED from [androidx.annotation:annotation-experimental:1.4.0] /home/jewelnewroz/.gradle/caches/8.12/transforms/25a37e5cf0f4e5220cbf7cafe9249990/transformed/jetified-annotation-experimental-1.4.0/AndroidManifest.xml:5:5-44
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /home/jewelnewroz/.gradle/caches/8.12/transforms/aa2b156f95f9eab66ccb02ea9eacfedd/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:5:5-43
 MERGED from [com.getkeepsafe.relinker:relinker:1.4.5] /home/jewelnewroz/.gradle/caches/8.12/transforms/aa2b156f95f9eab66ccb02ea9eacfedd/transformed/jetified-relinker-1.4.5/AndroidManifest.xml:5:5-43
+	tools:overrideLibrary
+		ADDED from [:flutter_secure_storage] /home/jewelnewroz/StudioProjects/Durpalla/build/flutter_secure_storage/intermediates/merged_manifest/debug/processDebugManifest/AndroidManifest.xml:8:9-50
 	android:targetSdkVersion
 		INJECTED from /home/jewelnewroz/StudioProjects/Durpalla/android/app/src/debug/AndroidManifest.xml
 	android:minSdkVersion
@@ -205,7 +213,7 @@ ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/tra
 		ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
 	android:name
 		ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:23:9-81
-permission#com.example.durpalla.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+permission#com.durpalla.booking.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
 		ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:24:9-44
@@ -215,7 +223,7 @@ uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:22-94
-uses-permission#com.example.durpalla.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+uses-permission#com.durpalla.booking.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
 ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:5-97
 	android:name
 		ADDED from [androidx.core:core:1.13.1] /home/jewelnewroz/.gradle/caches/8.12/transforms/66aa7f682cf61ffe3ee75db6ee238d77/transformed/core-1.13.1/AndroidManifest.xml:26:22-94

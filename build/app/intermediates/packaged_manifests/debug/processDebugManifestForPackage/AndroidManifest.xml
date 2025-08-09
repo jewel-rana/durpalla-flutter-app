@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.durpalla"
+    package="com.durpalla.booking"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -29,10 +29,10 @@
     </queries>
 
     <permission
-        android:name="com.example.durpalla.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:name="com.durpalla.booking.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
 
-    <uses-permission android:name="com.example.durpalla.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+    <uses-permission android:name="com.durpalla.booking.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
 
     <application
         android:name="android.app.Application"
@@ -42,7 +42,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="durpalla" >
         <activity
-            android:name="com.example.durpalla.MainActivity"
+            android:name="com.durpalla.booking.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"
@@ -80,7 +80,7 @@
         -->
         <provider
             android:name="dev.fluttercommunity.plus.share.ShareFileProvider"
-            android:authorities="com.example.durpalla.flutter.share_provider"
+            android:authorities="com.durpalla.booking.flutter.share_provider"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -101,7 +101,7 @@
 
         <provider
             android:name="net.nfet.flutter.printing.PrintFileProvider"
-            android:authorities="com.example.durpalla.flutter.printing"
+            android:authorities="com.durpalla.booking.flutter.printing"
             android:exported="false"
             android:grantUriPermissions="true" >
             <meta-data
@@ -118,7 +118,7 @@
 
         <provider
             android:name="androidx.startup.InitializationProvider"
-            android:authorities="com.example.durpalla.androidx-startup"
+            android:authorities="com.durpalla.booking.androidx-startup"
             android:exported="false" >
             <meta-data
                 android:name="androidx.lifecycle.ProcessLifecycleInitializer"

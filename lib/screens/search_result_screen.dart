@@ -7,6 +7,7 @@ class SearchResultScreen extends StatefulWidget {
   final String from;
   final String to;
   final String date;
+  final String? return_date;
 
   const SearchResultScreen({
     super.key,
@@ -14,6 +15,7 @@ class SearchResultScreen extends StatefulWidget {
     required this.from,
     required this.to,
     required this.date,
+    this.return_date,
   });
 
   @override

@@ -1,7 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
+import '../utils/auth_utils.dart';
+
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkAuthAndRedirect(context); // from auth_utils.dart
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
-              onTap: () {},
+              onTap: () => logout(context),
             ),
           ],
         ),

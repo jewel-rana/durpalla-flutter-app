@@ -18,6 +18,13 @@
 /home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/runner/CMakeFiles/rebuild_cache.dir
 /home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/runner/CMakeFiles/edit_cache.dir
 /home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/runner/CMakeFiles/durpalla.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/install/strip.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/install/local.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/install.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/list_install_components.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/rebuild_cache.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/edit_cache.dir
+/home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/flutter_secure_storage_linux/CMakeFiles/flutter_secure_storage_linux_plugin.dir
 /home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/printing/CMakeFiles/install/strip.dir
 /home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/printing/CMakeFiles/install/local.dir
 /home/jewelnewroz/StudioProjects/Durpalla/build/linux/x64/debug/plugins/printing/CMakeFiles/install.dir
