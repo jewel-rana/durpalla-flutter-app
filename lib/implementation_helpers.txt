@@ -32,3 +32,6 @@ showSnack(context, "Booking confirmed!", kind: SnackKind.success);
 
 // 6-second error snackbar
 showSnack(context, "Server is down, please try again later.", kind: SnackKind.error, duration: Duration(seconds: 6));
+
+
+Color(0xFF0061A8)

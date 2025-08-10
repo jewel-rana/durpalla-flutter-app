@@ -3,7 +3,6 @@ import 'package:durpalla/screens/auth/login_screen.dart';
 import 'package:durpalla/screens/auth/register_screen.dart';
 import 'package:durpalla/utils/auth_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
@@ -71,15 +70,15 @@ class _MyAppState extends State<MyApp> {
           Theme.of(context).textTheme,
         ),
         brightness: Brightness.light,
-        primaryColor: const Color(0xFF0061A8),
+        primaryColor: const Color(0xFF4B8DF1),
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF0061A8),
+          backgroundColor: Color(0xFF4B8DF1),
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue, // Button background
+            backgroundColor: Color(0xFF4B8DF1), // Button background
             foregroundColor: Colors.white, // Text color
             padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
             textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -216,7 +215,7 @@ class _MainScaffoldState extends State<MainScaffold> {
           padding: EdgeInsets.zero,
           children: [
             const DrawerHeader(
-              decoration: BoxDecoration(color: Color(0xFF0061A8)),
+              decoration: BoxDecoration(color: Color(0xFF78C0F4)),
               child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             ListTile(
@@ -249,9 +248,9 @@ class _MainScaffoldState extends State<MainScaffold> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF3A95D8), Color(0xFFFFFFFF)],
-            begin: Alignment.topCenter,
-            end: Alignment.center,
+            colors: [Color(0xEC4B8DF1), Color(0xFFFFFFFF)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
         ),
         child: SafeArea(

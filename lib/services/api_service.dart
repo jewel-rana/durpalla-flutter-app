@@ -18,7 +18,7 @@ class ApiService {
     required int itemId,
     required String idempotencyKey,
   }) async {
-    final uri = Uri.parse('$baseUrl/cart/locks');
+    final uri = Uri.parse('$baseUrl/cart/add');
     final res = await _client.post(
       uri,
       headers: {

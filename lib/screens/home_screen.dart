@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../utils/banner_slider.dart';
 import 'booking_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -24,40 +25,14 @@ class HomeScreen extends StatelessWidget {
         children: [
           const Text(
             'Welcome to Durpalla',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white70),
           ),
           const SizedBox(height: 16),
-          Container(
-            height: 180,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.asset(
-                    'assets/slider1.png',
-                    fit: BoxFit.cover,
-                  ),
-                  Image.asset(
-                    'assets/slider1.png',
-                    fit: BoxFit.cover,
-                  ),
-                  Image.asset(
-                    'assets/slider1.png',
-                    fit: BoxFit.cover,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          const BannerSlider(),
           const SizedBox(height: 24),
           const Text(
             'Services',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white70),
           ),
           const SizedBox(height: 12),
           GridView.builder(

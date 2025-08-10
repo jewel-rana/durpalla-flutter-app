@@ -43,7 +43,6 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
     _fetchTripDetails();
   }
 
-
   Future<void> _fetchTripDetails() async {
     setState(() => loading = true);
     final response = await ApiService.get('trip/${widget.tripId}');
