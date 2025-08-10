@@ -113,7 +113,7 @@ class _MyAppState extends State<MyApp> {
       home: MainScaffold(
         appBar: AppBar(
           title: Image.asset(
-            'assets/logo.png',
+            'assets/logo-white.png',
             height: 40, // Adjust as needed
           ),
           centerTitle: true, // Center the logo
