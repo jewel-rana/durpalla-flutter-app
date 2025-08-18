@@ -20,6 +20,7 @@ dependencies:
   google_fonts: ^6.2.1
   flutter_secure_storage: ^9.2.2
   change_app_package_name: ^1.5.0
+  flutter_native_splash: ^2.4.1
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +30,11 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+
+
+flutter_native_splash:
+  color: "#003366"             # deep ocean background
+  image: assets/logo-white.png # your logo
+  android_12:
+    color: "#003366"
+    image: assets/logo-white.png

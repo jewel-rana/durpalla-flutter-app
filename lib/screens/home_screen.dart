@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../theme/app_colors.dart';
 import '../utils/banner_slider.dart';
 import 'booking_screen.dart';
 
@@ -10,12 +11,12 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Define your items list
     final List<Map<String, dynamic>> transportItems = [
-      {'label': 'Launch', 'icon': Icons.directions_boat, 'color': Colors.blue.shade50},
-      {'label': 'Bus', 'icon': Icons.directions_bus, 'color': Colors.blue.shade50},
-      {'label': 'Boat', 'icon': Icons.sailing, 'color': Colors.blue.shade50}, // or a different boat icon
-      {'label': 'Flight', 'icon': Icons.flight, 'color': Colors.blue.shade50},
-      {'label': 'Train', 'icon': Icons.train, 'color': Colors.blue.shade50},
-      {'label': 'Hotels', 'icon': Icons.hotel, 'color': Colors.blue.shade50},
+      {'label': 'Launch', 'icon': Icons.directions_boat, 'color': AppColors.darkTeal},
+      {'label': 'Bus', 'icon': Icons.directions_bus, 'color': AppColors.lightSeafoam},
+      {'label': 'Boat', 'icon': Icons.sailing, 'color': AppColors.lightSeafoam}, // or a different boat icon
+      {'label': 'Flight', 'icon': Icons.flight, 'color': AppColors.lightSeafoam},
+      {'label': 'Train', 'icon': Icons.train, 'color': AppColors.lightSeafoam},
+      {'label': 'Hotels', 'icon': Icons.hotel, 'color': AppColors.lightSeafoam},
     ];
 
     return SingleChildScrollView(
@@ -24,17 +25,10 @@ class HomeScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            'Welcome to Durpalla',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white70),
-          ),
-          const SizedBox(height: 16),
-          const BannerSlider(),
-          const SizedBox(height: 24),
-          const Text(
             'Services',
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white70),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 15),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -60,7 +54,8 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
                 child: Card(
-                  color: item['color'],
+                  color: (Colors.white).withValues(alpha: 0.7),
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -68,17 +63,37 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       if (item['icon'] is IconData)
-                        Icon(item['icon'], size: 32, color: Colors.blue)
+                        Icon(item['icon'], size: 32, color: Colors.white)
                       else
-                        Image.asset(item['icon'], width: 32, height: 32),
+                        Image.asset(
+                          item['icon'],
+                          width: 32,
+                          height: 32,
+                          color: Colors.white,
+                        ),
                       const SizedBox(height: 8),
-                      Text(item['label']),
+                      Text(
+                        item['label'],
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ],
                   ),
-                ),
+                )
+
               );
             },
           ),
+          const SizedBox(height: 75),
+          const Text(
+            'Today\'s Trips',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white70),
+          ),
+          const SizedBox(height: 16),
+          const BannerSlider(),
+          const SizedBox(height: 24),
         ],
       ),
     );

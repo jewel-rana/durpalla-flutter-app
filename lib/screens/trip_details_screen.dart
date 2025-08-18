@@ -19,6 +19,9 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
   Map<String, dynamic>? tripDetails;
   bool loading = true;
   bool _isCartSheetOpen = false;
+  static const double _tileHeight = 84;
+  static const double _tilePad = 10.0;
+
   late final ApiService api; // add this
 
   // UI state
@@ -323,16 +326,18 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
     );
   }
 
-  Widget _buildCabinGrid() {
-    final cabinsMap = tripDetails?['cabins'] as Map<String, dynamic>?;
-    if (cabinsMap == null) return const Text('No cabins');
+  Widget _buildItemGrid({required String kind}) {
+    // kind: 'cabin' or 'seat'
+    final dataKey = kind == 'seat' ? 'seats' : 'cabins';
+    final itemsMap = tripDetails?[dataKey] as Map<String, dynamic>?;
+    if (itemsMap == null) return Text('No $dataKey');
 
     final key = _floorKey(selectedFloor);
-    final floorData = cabinsMap[key];
+    final floorData = itemsMap[key];
 
     // Must be like {"1":[...], "2":[...]} for rows
     if (floorData is! Map || floorData.isEmpty) {
-      return const Text('No cabins');
+      return Text('No $dataKey');
     }
 
     final List<int> sortedRows = floorData.keys
@@ -349,21 +354,40 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
 
         return Expanded(
           child: Column(
-            children: rowItems.map<Widget>((cabin) {
-              if (cabin['cabin_type'] == 'empty') {
-                return const SizedBox(height: 60);
-              }
+            children: rowItems.map<Widget>((item) {
+              // handle "empty" slots for either kind
+              final typeVal = item['${kind}_type'] ?? item['type'];
+              if (typeVal == 'empty') return const SizedBox(height: 60);
 
-              final isSelected = isInCart(cabin);
+              final isSelected = isInCart(item);
+
               final isDisabled =
-                  (cabin['status']?.toString() == '0') || (cabin['cabin_class'] == 'cabin-disable');
+                  (item['status']?.toString() == '0') ||
+                      (item['${kind}_class'] == '$kind-disable') ||
+                      (item['cabin_class'] == 'cabin-disable') || // fallback if server uses cabin_* for both
+                      (item['seat_class'] == 'seat-disable');
+
+              // display helpers
+              final number = (item['${kind}_no'] ??
+                  item['cabin_no'] ??
+                  item['seat_no'] ??
+                  '')
+                  .toString();
+
+              final isAC = (item['${kind}_is_ac'] ??
+                  item['is_ac'] ??
+                  item['cabin_is_ac'] ??
+                  0) ==
+                  1;
+
+              final fare = item['fare'];
 
               return Opacity(
                 opacity: isDisabled ? 0.3 : 1,
                 child: IgnorePointer(
                   ignoring: isDisabled,
                   child: GestureDetector(
-                    onTap: () async => await toggleCartItem(cabin),
+                    onTap: () async => await toggleCartItem(item),
                     child: Container(
                       margin: const EdgeInsets.all(6),
                       padding: const EdgeInsets.all(10),
@@ -377,7 +401,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          if (cabin['cabin_is_ac'] == 1)
+                          if (isAC)
                             const Align(
                               alignment: Alignment.topRight,
                               child: Text(
@@ -389,10 +413,10 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
                               ),
                             ),
                           Text(
-                            cabin['cabin_no']?.toString() ?? '',
+                            number,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text('৳${cabin['fare']}'),
+                          if (fare != null) Text('৳$fare'),
                         ],
                       ),
                     ),
@@ -405,6 +429,7 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
       }).toList(),
     );
   }
+
 
   Future<void> _openCartSheet() {
     return showModalBottomSheet(
@@ -580,11 +605,114 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
     );
   }
 
+  Widget _buildItemTile(Map<String, dynamic> item, {required String kind}) {
+    final typeVal = (item['${kind}_type'] ?? item['type'] ?? '').toString();
+    final isEmpty = typeVal == 'empty';
+
+    // keep alignment for walkways/empty slots, no UI/price
+    if (isEmpty) return const SizedBox(height: _tileHeight);
+
+    final isSelected = isInCart(item);
+    final isDisabled =
+        item['status']?.toString() == '0' ||
+            item['${kind}_class'] == '$kind-disable' ||
+            item['cabin_class'] == 'cabin-disable' ||
+            item['seat_class'] == 'seat-disable';
+
+    final number = (item['${kind}_no'] ?? item['cabin_no'] ?? item['seat_no'] ?? '').toString();
+
+    final isAC = (item['${kind}_is_ac'] ??
+        item['is_ac'] ??
+        item['cabin_is_ac'] ?? 0) == 1;
+
+    final num? fareNum = (item['fare'] is String)
+        ? num.tryParse(item['fare'])
+        : item['fare'] as num?;
+
+    return Opacity(
+      opacity: isDisabled ? 0.35 : 1,
+      child: IgnorePointer(
+        ignoring: isDisabled,
+        child: GestureDetector(
+          onTap: () async => await toggleCartItem(item),
+          child: SizedBox(
+            height: _tileHeight,
+            child: Stack(
+              children: [
+                // Card
+                Container(
+                  margin: const EdgeInsets.all(6),
+                  padding: const EdgeInsets.all(_tilePad),
+                  decoration: BoxDecoration(
+                    color: isSelected ? Colors.green[100] : Colors.grey[200],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: isSelected ? Colors.green : Colors.grey,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (number.isNotEmpty)
+                        Text(
+                          number,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
+                      if (fareNum != null && fareNum > 0)
+                        Text(
+                          '৳${fareNum.toStringAsFixed(0)}',
+                          style: TextStyle(fontSize: 12, color: Colors.grey.shade800),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
+                    ],
+                  ),
+                ),
+
+                // AC badge (overlaps; doesn't change height)
+                if (isAC)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: Container(
+                      margin: const EdgeInsets.all(6),
+                      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                      decoration: BoxDecoration(
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(6),
+                        boxShadow: const [
+                          BoxShadow(color: Colors.black26, blurRadius: 2, offset: Offset(0, 1)),
+                        ],
+                      ),
+                      child: const Text(
+                        'AC',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 
   // ---- Build ----------------------------------------------------------------
 
   @override
   Widget build(BuildContext context) {
+    const double _tileHeight = 84;
+    const double _tilePad = 10;
     return Scaffold(
       appBar: AppBar(title: const Text('Trip Details')),
       body: loading
@@ -602,15 +730,10 @@ class _TripDetailsScreenState extends State<TripDetailsScreen> {
             const SizedBox(height: 16),
             _buildTabs(),
             const SizedBox(height: 16),
-            if (selectedTab == 'cabin')
+            if (selectedTab == 'cabin' || selectedTab == 'seat')
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: _buildCabinGrid(),
-              ),
-            if (selectedTab == 'seat')
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text('Seat layout coming soon...'),
+                child: _buildItemGrid(kind: selectedTab), // 👈 one builder for both
               ),
           ],
         ),

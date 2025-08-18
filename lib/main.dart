@@ -1,8 +1,10 @@
 import 'package:durpalla/screens/auth/check_mobile_screen.dart';
 import 'package:durpalla/screens/auth/login_screen.dart';
 import 'package:durpalla/screens/auth/register_screen.dart';
+import 'package:durpalla/theme/app_colors.dart';
 import 'package:durpalla/utils/auth_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/home_screen.dart';
@@ -15,7 +17,7 @@ import 'screens/more_screen.dart';
 import 'screens/privacy_policy_screen.dart';
 
 void main() {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   //
   // // Draw behind system bars
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -30,7 +32,6 @@ void main() {
   //   systemStatusBarContrastEnforced: false,
   //   systemNavigationBarContrastEnforced: false,
   // ));
-
 
   runApp(const MyApp());
 }
@@ -61,8 +62,8 @@ class _MyAppState extends State<MyApp> {
         snackBarTheme: SnackBarThemeData(
           backgroundColor: Colors.black87, // Global background color
           contentTextStyle: TextStyle(
-            color: Colors.white,           // Global text color
-            fontSize: 16,                   // Global text size
+            color: Colors.white, // Global text color
+            fontSize: 16, // Global text size
           ),
           behavior: SnackBarBehavior.floating, // Optional global behavior
         ),
@@ -70,18 +71,21 @@ class _MyAppState extends State<MyApp> {
           Theme.of(context).textTheme,
         ),
         brightness: Brightness.light,
-        primaryColor: const Color(0xFF4B8DF1),
+        primaryColor: AppColors.deepNavyBlue,
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Color(0xFF4B8DF1),
+          backgroundColor: AppColors.deepNavyBlue,
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF4B8DF1), // Button background
-            foregroundColor: Colors.white, // Text color
+            backgroundColor: AppColors.deepNavyBlue,
+            // Button background
+            foregroundColor: Colors.white,
+            // Text color
             padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
-            textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            textStyle:
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
@@ -89,14 +93,14 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       darkTheme: ThemeData.dark().copyWith(
-        primaryColor: const Color(0xFF0061A8),
+        primaryColor: AppColors.deepNavyBlue,
         scaffoldBackgroundColor: const Color(0xFF121212),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF1F1F1F),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF0061A8),
+            backgroundColor: AppColors.deepNavyBlue,
           ),
         ),
       ),
@@ -105,20 +109,27 @@ class _MyAppState extends State<MyApp> {
         '/auth/check': (_) => const CheckMobileScreen(),
         '/auth/login': (_) => const LoginScreen(),
         '/auth/register': (_) => const RegisterScreen(),
-        '/home': (_) => MainScaffold(onThemeToggle: toggleTheme, isDark: _themeMode == ThemeMode.dark),
+        '/home': (_) => MainScaffold(
+            onThemeToggle: toggleTheme, isDark: _themeMode == ThemeMode.dark),
       },
 
       // 🔒 Let AuthGate decide first page
       // home: const AuthGate(),
       home: MainScaffold(
         appBar: AppBar(
-          title: Image.asset(
-            'assets/logo-white.png',
-            height: 40, // Adjust as needed
-          ),
-          centerTitle: true, // Center the logo
-          backgroundColor: Colors.white, // Optional
-          elevation: 0, // Optional: flat app bar
+          title: Image.asset('assets/logo-white.png', height: 40),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          // let gradient show through
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          iconTheme: const IconThemeData(color: Colors.white),
+          foregroundColor: Colors.white,
+          // status bar icons/text
+          systemOverlayStyle: ThemeMode.dark == _themeMode
+              ? SystemUiOverlayStyle.light
+              : SystemUiOverlayStyle
+                  .light, // we want light icons over dark gradient
         ),
         onThemeToggle: toggleTheme,
         isDark: _themeMode == ThemeMode.dark,
@@ -160,7 +171,9 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   static final List<Widget> _pages = <Widget>[
     const HomeScreen(),
-    const BookingScreen(transportType: 'launch',),
+    const BookingScreen(
+      transportType: 'launch',
+    ),
     const TripsScreen()
   ];
 
@@ -202,9 +215,11 @@ class _MainScaffoldState extends State<MainScaffold> {
                 }
                 // already logged in
                 // ignore: use_build_context_synchronously
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (_) => const AuthGuard(child: ProfileScreen()),
-                ));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AuthGuard(child: ProfileScreen()),
+                    ));
               },
             ),
           ),
@@ -216,11 +231,13 @@ class _MainScaffoldState extends State<MainScaffold> {
           children: [
             const DrawerHeader(
               decoration: BoxDecoration(color: Color(0xFF78C0F4)),
-              child: Text('Menu', style: TextStyle(color: Colors.white, fontSize: 24)),
+              child: Text('Menu',
+                  style: TextStyle(color: Colors.white, fontSize: 24)),
             ),
             ListTile(
               title: const Text('Support'),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SupportScreen())),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const SupportScreen())),
             ),
             ListTile(
               title: const Text('Settings'),
@@ -236,36 +253,57 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
             ListTile(
               title: const Text('More'),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const MoreScreen())),
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => const MoreScreen())),
             ),
             ListTile(
               title: const Text('Privacy Policy'),
-              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PrivacyPolicyScreen())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const PrivacyPolicyScreen())),
             ),
           ],
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xEC4B8DF1), Color(0xFFFFFFFF)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+      body: Stack(
+        children: [
+          // 1) Ocean gradient (from AppColors)
+          Container(
+            decoration: const BoxDecoration(
+              gradient: AppColors.oceanGradient,
+            ),
           ),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: IndexedStack(
-            index: _selectedIndex,
-            children: _pages.map((page) {
-              return Scaffold(
-                backgroundColor: Colors.transparent,
-                body: page,
-              );
-            }).toList(),
+
+          // 2) Top wave image
+          Positioned.fill(
+            child: DecoratedBox(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/background-dark.png'),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
+
+          // 3) Your pages
+          SafeArea(
+            bottom: false,
+            child: IndexedStack(
+              index: _selectedIndex,
+              children: _pages.map((page) {
+                return Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: page,
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      )
+      ,
       bottomNavigationBar: SafeArea(
         child: ColoredBox(
           color: Colors.blue.shade50, // same as your bar background
@@ -279,9 +317,24 @@ class _MainScaffoldState extends State<MainScaffold> {
               elevation: 0,
               type: BottomNavigationBarType.fixed,
               items: const <BottomNavigationBarItem>[
-                BottomNavigationBarItem(icon: Icon(Icons.home, size: 28,), label: 'Home'),
-                BottomNavigationBarItem(icon: Icon(Icons.search, size: 28,), label: 'Search'),
-                BottomNavigationBarItem(icon: Icon(Icons.airplane_ticket, size: 28,), label: 'Trips'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.home,
+                      size: 28,
+                    ),
+                    label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.search,
+                      size: 28,
+                    ),
+                    label: 'Search'),
+                BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.airplane_ticket,
+                      size: 28,
+                    ),
+                    label: 'Trips'),
               ],
               currentIndex: _selectedIndex,
               selectedItemColor: const Color(0xFF0061A8),
@@ -299,7 +352,6 @@ class _MainScaffoldState extends State<MainScaffold> {
           ),
         ),
       ),
-
     );
   }
 }
